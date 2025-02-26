@@ -17,9 +17,26 @@ window.fill((255, 255, 255))
 # Using draw.rect module of
 # pygame to draw the solid rectangle
 pygame.draw.rect(window, (66, 115, 18),
-				[100, 100, 100, 100], 0)
+				[100, 100, 10, 10], 0)
 
 # Draws the surface object to the screen.
 pygame.display.update()
-sleep(4444)
+
+
+def move():
+	
+
+
+while True:
+	for event in pygame.event.get():
+		if event.type == pygame.KEYDOWN:
+			if event.key == pygame.K_w:
+				print("Move the character forwards")
+			elif event.key == pygame.K_s:
+				print("Move the character backwards")
+			elif event.key == pygame.K_a:
+				print("Move the character left")
+			elif event.key == pygame.K_d:
+				print("Move the character right")
+
 
