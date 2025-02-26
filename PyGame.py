@@ -1,42 +1,68 @@
-# Importing pygame module
 import pygame
-from time import sleep
 from pygame.locals import *
 
-# initiate pygame and give permission
-# to use pygame's functionality.
+# Take colors input
+YELLOW = (255, 255, 0)
+BLUE = (0, 0, 255)
+
+# Construct the GUI game
 pygame.init()
 
-# create the display surface object
-# of specific dimension.
-window = pygame.display.set_mode((600, 600))
+# Set dimensions of game GUI
+w, h = 1200, 900
+screen = pygame.display.set_mode((w, h))
 
-# Fill the scree with white color
-window.fill((255, 255, 255))
+# Take image as input
+img = pygame.image.load('NinjaSprite.png')
 
-# Using draw.rect module of
-# pygame to draw the solid rectangle
-pygame.draw.rect(window, (66, 115, 18),
-				[100, 100, 10, 10], 0)
+# Scale the image to a smaller size (e.g., 100x100)
+img = pygame.transform.scale(img, (100, 100))
 
-# Draws the surface object to the screen.
-pygame.display.update()
+# Convert the image to a format suitable for display
+img = img.convert()
 
+# Draw rectangle around the image
+rect = img.get_rect()
+rect.center = w // 2, h // 2
 
-def move():
-	
+# Set running and moving values
+running = True
+moving = False
 
+# Setting what happens when game
+# is in running state
+while running:
 
-while True:
-	for event in pygame.event.get():
-		if event.type == pygame.KEYDOWN:
-			if event.key == pygame.K_w:
-				print("Move the character forwards")
-			elif event.key == pygame.K_s:
-				print("Move the character backwards")
-			elif event.key == pygame.K_a:
-				print("Move the character left")
-			elif event.key == pygame.K_d:
-				print("Move the character right")
+    for event in pygame.event.get():
+
+        # Close if the user quits the game
+        if event.type == QUIT:
+            running = False
+
+        # Making the image move
+        elif event.type == MOUSEBUTTONDOWN:
+            if rect.collidepoint(event.pos):
+                moving = True
+
+        # Set moving as False if you want to move the image only with the mouse click
+        elif event.type == MOUSEBUTTONUP:
+            moving = False
+
+        # Make your image move continuously
+        elif event.type == MOUSEMOTION and moving:
+            rect.move_ip(event.rel)
+
+    # Set screen color and image on screen
+    screen.fill(YELLOW)
+    screen.blit(img, rect)
+
+    # Construct the border to the image
+    pygame.draw.rect(screen, BLUE, rect, 2)
+
+    # Update the GUI pygame
+    pygame.display.update()
+
+# Quit the GUI game
+pygame.quit()
 
 
